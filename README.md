@@ -1,5 +1,5 @@
 # Ex.07 Restaurant Website
-## Date:09/10/2025
+## Date:16/10/2025
 
 ## AIM:
 To develop a static Restaurant website to display the food items and services provided by them.
@@ -29,187 +29,199 @@ Publish the website in the given URL.
 
 ## PROGRAM:
 ```
+base.html
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title> D Restaurant</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      background: #f8f8f8;
-      color: #333;
-    }
-    header {
-      background: #fff;
-      text-align: center;
-      padding: 20px;
-    }
-    header h1 {
-      margin: 0;
-      font-size: 28px;
-    }
-    nav {
-      background: #333;
-      text-align: center;
-      padding: 10px 0;
-    }
-    nav a {
-      color: #fff;
-      text-decoration: none;
-      margin: 0 20px;
-      font-weight: bold;
-    }
-    nav a:hover {
-      color: #ffcc00;
-    }
-    .banner {
-      background: url('Screenshot 2025-10-06 185705.png') no-repeat center/cover;
-      color: white;
-      padding: 60px 20px;
-      text-align: center;
-    }
-    .banner h2 {
-      font-size: 30px;
-      margin-bottom: 10px;
-    }
-    .cards {
-      display: flex;
-      justify-content: space-around;
-      margin: 20px;
-      gap: 15px;
-    }
-    .card {
-      background: #ffeedd;
-      padding: 15px;
-      border-radius: 10px;
-      width: 30%;
-      text-align: center;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    }
-    .card img {
-      width: 100%;
-      border-radius: 10px;
-      margin-bottom: 10px;
-    }
-    .footer {
-      background: #333;
-      color: white;
-      text-align: center;
-      padding: 15px;
-      margin-top: 20px;
-    }
-    .footer span {
-      color: orange;
-      font-weight: bold;
-    }
-    section {
-      padding: 20px;
-      display: none;
-    }
-    section.active {
-      display: block;
-    }
-  </style>
-  <script>
-    function showPage(pageId) {
-      let pages = document.querySelectorAll("section");
-      pages.forEach(p => p.classList.remove("active"));
-      document.getElementById(pageId).classList.add("active");
-    }
-  </script>
+  <meta charset="utf-8">
+  <title>{% block title %}Spice Delight{% endblock %}</title>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: #f5f5f5;
+  margin: 0; padding: 0;
+}
+
+header {
+  background-color: #c0392b;
+  padding: 10px;
+  color: white;
+}
+
+nav ul {
+  list-style: none;
+  text-align: center;
+  padding: 0;
+}
+
+nav ul li {
+  display: inline-block;
+  margin: 0 15px;
+}
+
+nav ul li a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.banner {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+}
+
+.intro {
+  padding: 40px;
+  text-align: center;
+}
+
+.menu-grid, .team-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  padding: 20px;
+}
+
+.menu-grid .item img, .team-grid .member img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+footer {
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 10px;
+}
+
+</style>
+
 </head>
 <body>
+  <header>
+    <img src="{% static 'images/banner.png'%}" alt="Banner" class="banner">
+    <nav>
+      <ul>
+        <li><a href="{% url 'home' %}">Home</a></li>
+        <li><a href="{% url 'menu' %}">Menu</a></li>
+        <li><a href="{% url 'administration' %}">Administration</a></li>
+        <li><a href="{% url 'contact' %}">Contact Us</a></li>
+      </ul>
+    </nav>
+  </header>
 
-<header>
-  <h1>spice&stories</h1>
-</header>
+  <main>
+    {% block content %}{% endblock %}
+  </main>
 
-<nav>
-  <a href="#" onclick="showPage('home')">Home</a>
-  <a href="#" onclick="showPage('menu')">Menu</a>
-  <a href="#" onclick="showPage('admin')">Administration</a>
-  <a href="#" onclick="showPage('contact')">Contact Us</a>
-</nav>
-
-<!-- Home Section -->
-<section id="home" class="active">
-  <div class="banner">
-    <h2>30% Off This Weekend</h2>
-    <p>Enjoy delicious meals with special discounts only at Little Lemon!</p>
-  </div>
-
-  <div class="cards">
-    <div class="card">
-      <h3>Our New Menu</h3>
-      <img src="Screenshot 2025-10-06 185632.png" alt="Menu">
-      <p>Check out our fresh and tasty new dishes for this season.</p>
-    </div>
-    <div class="card">
-      <h3>Book a Table</h3>
-      <img src="Screenshot 2025-10-06 185650.png" alt="Table">
-      <p>Reserve your table easily and enjoy dining with us.</p>
-    </div>
-    <div class="card">
-      <h3>Opening Hours</h3>
-      <img src="Screenshot 2025-10-06 185720.png" alt="Hours">
-      <p>Mon–Fri: 2pm - 10pm<br>Sat: 2pm - 11pm<br>Sun: 2pm - 9pm</p>
-    </div>
-  </div>
-</section>
-
-<!-- Menu Section -->
-<section id="menu">
-  <h2>Our Menu</h2>
-  <ul>
-    <li>Grilled Chicken Skewers</li>
-    <li>Chicken friedrice</li>
-    <li>parotta</li>
-    <li>Pasta Alfredo</li>
-    <li>Cheeseburger</li>
-    <li>Fish Curry</li>
-    <li>Chicken Biryani</li>
-    <li>noodles</li>
-    <li>Tandoori Paneer</li>
-    <li>Garlic Naan</li>
-    <li>Fruit Salad</li>
-    <li>Chocolate Cake</li>
-  </ul>
-</section>
-
-<!-- Administration Section -->
-<section id="admin">
-  <h2>Administration</h2>
-  <ul>
-    <li>thala dhoni – Manager</li>
-    <li> devon conway– Chef</li>
-    <li>sam curran Assistant Chef</li>
-    <li>dhivya – Waitress</li>
-    <li>Rajesh Waiter</li>
-    <li>sushmitha – Cashier</li>
-  </ul>
-</section>
-
-<!-- Contact Section -->
-<section id="contact">
-  <h2>Contact Us</h2>
-  <p><b>Address:</b> 123 Main Street, City, India</p>
-  <p><b>Phone:</b> +919790018465</p>
-  <p><b>Email:</b> info@vishnupriya38.com</p>
-</section>
-
-<!-- Footer -->
-<div class="footer">
-  Designed and Developed by <span>vishnu,sushsmiths,mithra</span>
-</div>
-
+  <footer>
+    <p>Designed by Akash A © 2025</p>
+  </footer>
 </body>
 </html>
+home.html
+{% extends 'base.html' %}
+{% block title %}Home — Spice Delight{% endblock %}
+{% block content %}
+<section class="intro">
+  <h1>Welcome to Spice Delight</h1>
+  <p>Serving traditional flavors with a modern twist. Join us for an unforgettable experience.</p>
+</section>
+{% endblock %}
+menu.html
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Menu — Spice Delight{% endblock %}
+{% block content %}
+<section class="menu">
+  <h2>Our Menu</h2>
+  <div class="menu-grid">
+    {% for food in foods %}
+      <div class="item">
+        <img src="{% static 'images/'|add:food.image %}" alt="{{ food.name }}">
+        <p>{{ food.name }}</p>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}
+admin.html
+{% extends 'base.html' %}
+{% block title %}Administration — Spice Delight{% endblock %}
+{% block content %}
+<section class="team">
+  <h2>Our Team</h2>
+  <div class="team-grid">
+    {% for member in team %}
+      <div class="member">
+        <img src="{% static 'images/'|add:member.image %}" alt="{{ member.name }}">
+        <p>{{ member.name }} – {{ member.role }}</p>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}
+contact.html
+% extends 'base.html' %}
+{% block title %}Contact Us — Spice Delight{% endblock %}
+{% block content %}
+<section class="contact">
+  <h2>Contact Us</h2>
+  <p>📍 Address: {{ contact.address }}</p>
+  <p>📞 Phone: {{ contact.phone }}</p>
+  <p>✉ Email: {{ contact.email }}</p>
+</section>
+{% endblock %}
+views.py
+from django.shortcuts import render
+
+def home_view(request):
+    return render(request, 'home.html')
+
+def menu_view(request):
+    # example food list
+    foods = [
+        {'name': 'Biryani', 'image': 'images/biryani.png'},
+        {'name': 'Pizza', 'image': 'images/pizza.png'},
+        {'name': 'Pasta', 'image': 'images/Noddles.png'},
+        # add up to 12 ...
+    ]
+    return render(request, 'menu.html', {'foods': foods})
+
+def admin_view(request):
+    # team members list
+    team = [
+        {'name': 'Raj', 'role': 'Head Chef', 'image': 'team/raj.jpg'},
+        {'name': 'Anjali', 'role': 'Manager', 'image': 'team/anjali.jpg'},
+        # add 4 more ...
+    ]
+    return render(request, 'administration.html', {'team': team})
+
+def contact_view(request):
+    contact_info = {
+        'address': '123 Spice Street, Chennai City',
+        'phone': '+91-9876543210',
+        'email': 'contact@spicedelight.com',
+    }
+    return render(request, 'contact.html', {'contact': contact_info})
+    urls.py
+    from django.contrib import admin
+from django.urls import path, include
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', include('core.urls')),
+]
+
 ```
 
-## OUTPUT:
-![alt text](<Screenshot 2025-10-06 191945.png>)
+
+## OUTPUT
+<img width="1920" height="1080" alt="Screenshot 2025-10-16 114350" src="https://github.com/user-attachments/assets/53e8fe6d-dd61-4b81-b043-c3848a024d5b" />
+<img width="1920" height="1080" alt="Screenshot 2025-10-16 114402" src="https://github.com/user-attachments/assets/a69905d4-5992-4354-95a6-84737f9df1d4" />
+
 
 ## RESULT:
 The program for designing software company website using HTML and CSS is completed successfully.
